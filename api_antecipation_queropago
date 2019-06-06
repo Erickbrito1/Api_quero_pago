@@ -15,10 +15,10 @@ $array_transaction_ids_pagarme = array($id1, $id5, $id2, $id3, $id4);
 $payment_date = 1560168000*1000;
 
 // parâmetros a serem imputados manualmente:
-$recipient_id_fcv_balcao = 're_cjwglmsqq007lwv6delav097k';
-$recipient_id_fcv_querobolsa = 're_cjwglwkp4009ewp6d9u7xp9im';
+$recipient_id_fcv_balcao = '**********************';
+$recipient_id_fcv_querobolsa = '*******************************';
 $build = true;  //true = simulação de antecipação; false = antecipação é criada (sem volta)
-$pagarme_api_token_sandbox = "Basic YWtfdGVzdF9PSzVYU3hObFE3WU5sNXpRaEtSRHlGQzkyTVhjZk86eA==";
+$pagarme_api_token_sandbox = "****************************************";
 
 
 // inicialização das variáveis
