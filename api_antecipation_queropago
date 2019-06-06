@@ -1,18 +1,16 @@
 <?php
 
-//include ('get.php');
-//include ('post.php');
 include ('functions.php')
 
-$id1 = 6482964;
-$id2 = 6482963;
-$id3 = 6482746;
-$id4 = 6482740;
-$id5 = 6482586;
+$id1 = ;
+$id2 = ;
+$id3 = ;
+$id4 = ;
+$id5 = ;
 
  // inputs manuais a cada antecipação que será feita:
 $array_transaction_ids_pagarme = array($id1, $id5, $id2, $id3, $id4);
-$payment_date = 1560168000*1000;
+$payment_date = 1560135600*1000; // data: 10/06/19
 
 // parâmetros a serem imputados manualmente:
 $recipient_id_fcv_balcao = '**********************';
@@ -22,10 +20,8 @@ $pagarme_api_token_sandbox = "****************************************";
 
 
 // inicialização das variáveis
-$array_payable_ids_fcv_balcao = array();
-$array_payable_ids_fcv_querobolsa = array();
-$requested_amount_balcao = 0;
-$requested_amount_querobolsa = 0;
+$array_payables_ids_fcv_balcao = array();
+$array_payables_ids_fcv_querobolsa = array();
 
 $i = 0;
 $length_array_transactions = sizeof($array_transaction_ids_pagarme);
@@ -39,12 +35,10 @@ while ($i<$length_array_transactions){
 	while($j < 	$length_payable_repsonse){
 
 		if( $payable_response[$j]->recipient_id == $recipient_id_fcv_balcao){
-			 array_push($array_payable_ids_fcv_balcao,$payable_response[$j]->id);
-			 $requested_amount_balcao = $requested_amount_balcao + $payable_response[$j]->amount;
+			 array_push($array_payables_ids_fcv_balcao,$payable_response[$j]->id);
 		}
 		else if ($payable_response[$j]->recipient_id == $recipient_id_fcv_querobolsa){
-      		array_push($array_payable_ids_fcv_querobolsa, $payable_response[$j]->id);
-			$requested_amount_querobolsa = $requested_amount_querobolsa + $payable_response[$j]->amount;
+      		array_push($array_payables_ids_fcv_querobolsa, $payable_response[$j]->id);
 	   }
 
 		$j = $j + 1;
@@ -53,17 +47,17 @@ while ($i<$length_array_transactions){
 	$i = $i + 1;
 }
 
-//var_dump($array_payable_ids_fcv_balcao);
-//var_dump($array_payable_ids_fcv_querobolsa);
+//var_dump($array_payables_ids_fcv_balcao);
+//var_dump($array_payables_ids_fcv_querobolsa);
 
-$array_payable_ids_fcv_balcao_string = implode(",", $array_payable_ids_fcv_balcao);
-$array_payable_ids_fcv_querobolsa_string = implode(",", $array_payable_ids_fcv_querobolsa);
+$array_payables_ids_fcv_balcao_string = implode(",", $array_payables_ids_fcv_balcao);
+$array_payables_ids_fcv_querobolsa_string = implode(",", $array_payables_ids_fcv_querobolsa);
 
-//print ("Array como string: ".$array_payable_ids_fcv_balcao_string);
-//print ("Array como string: ".$array_payable_ids_fcv_querobolsa_string);
+//print ("Array como string: ".$array_payables_ids_fcv_balcao_string);
+//print ("Array como string: ".$array_payables_ids_fcv_querobolsa_string);
 
 
-create_anticipation($recipient_id_fcv_balcao,$build,$payment_date,$requested_amount_balcao,$array_payable_ids_fcv_balcao,$pagarme_api_token_sandbox);
-create_anticipation($recipient_id_fcv_querobolsa,$build,$payment_date,$requested_amount_querobolsa,$array_payable_ids_fcv_querobolsa,$pagarme_api_token_sandbox);
+create_anticipation($recipient_id_fcv_balcao,$build,$payment_date,$array_payables_ids_fcv_balcao,$pagarme_api_token_sandbox);
+create_anticipation($recipient_id_fcv_querobolsa,$build,$payment_date,$array_payables_ids_fcv_querobolsa,$pagarme_api_token_sandbox);
 
 ?>
